@@ -23,6 +23,6 @@ io.on('connection', function(socket){
 app.set('view engine', 'ejs');
 
 //Run it, Run it
-server.listen(process.env.PORT||80, function () {//Use the port that's default on Heroku, else use 3001
-    console.log("Running at port 80")
+server.listen(process.env.PORT||4000, function () {//Use the port that's default on Heroku, else use 3001
+    console.log("Running at port 4000")
 });
