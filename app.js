@@ -16,6 +16,7 @@ var client = new Twitter({
     access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
+//Get tweets with the word javascript
 client.stream('statuses/filter', {track: 'javascript'}, function(stream){
     stream.on('data', function(data){
         console.log(data);
