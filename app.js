@@ -1,11 +1,32 @@
+require('dotenv').config();
+
 var express = require('express');
 var Server = require('http').Server;
 var socketio = require('socket.io');
 var path = require('path');
+var Twitter = require('twitter');
 
 var app = express();
 var server = Server(app);
 var io = socketio(server);
+var client = new Twitter({
+    consumer_key: process.env.CONSUMER_KEY,
+    consumer_secret: process.env.CONSUMER_SECRET,
+    access_token_key: process.env.ACCESS_TOKEN_KEY,
+    access_token_secret: process.env.ACCESS_TOKEN_SECRET
+});
+
+client.stream('statuses/filter', {track: 'javascript'}, function(stream){
+    stream.on('data', function(data){
+        console.log(data);
+    });
+    stream.on('error', function(error){
+        console.log(error);
+    });
+});
+
+//EJS setup
+app.set('view engine', 'ejs');
 
 //Express setup
 app.use(express.static(path.join(__dirname, 'public')));
@@ -18,9 +39,6 @@ app.use('/', homeRouter);
 io.on('connection', function(socket){
     console.log('Mucho bueno');
 });
-
-//EJS setup
-app.set('view engine', 'ejs');
 
 //Run it, Run it
 server.listen(process.env.PORT||4000, function () {//Use the port that's default on Heroku, else use 3001
