@@ -1,8 +1,31 @@
-# Twitter stream
-Once upon a time in a world far far away there was a girl who knew nothing of code, an ultimate noob. Therefore she decided to learn how to code because she wanted to be a Front-End Developer.
+# Judgemental Terra
+## Introduction
 
-On a particular day a wizard gave her instructions to find an API and to create a real time webapplication. She travelled to the furthest websites and the highest priced API's but she could not find one.
+## Demo
+A live demo can be found on Heroku:
+[Judgemental Terra](https://api-real-time-web.herokuapp.com/)
 
-Desperate for one, she turned to Twitter and tried to use oAuth in which she failed again. Until she finally threw her hands up and used the node module for Twitter. Twenty minutes before the deadline the API worked leaving no time to make it real time.
+## To Do
+I've divided what I need to do into two sections: 'To Do' will cover the must haves and 'Wishlist' will cover features that are wanted but not needed.
 
-She wept when she pushed her repo to Github.
+[ ] User can only dislike once.
+[ ] Comments will be added to the HTML.
+[ ] Comments will be added to socket.io.
+[ ] Check if username already exists.
+[ ] Attach ID to user.
+[ ] Create style.css.
+[ ] Write a good read me.
+
+## Installation
+
+### Packages
+
+## Get Started
+
+## Wishlist
+[ ] Create full sign in/sign up.
+[ ] Attach database.
+[ ] Responsive design.
+[ ] Extra twitter stream that follows 'America first' hashtag.
+
+## License
