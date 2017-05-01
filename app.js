@@ -5,10 +5,13 @@ var Server = require('http').Server;
 var socketio = require('socket.io');
 var path = require('path');
 var Twitter = require('twitter');
+var bodyParser = require('body-parser');
+var multer = require('multer');
 
 var app = express();
 var server = Server(app);
 var io = socketio(server);
+//Setup to get access to twitter stream, on twitter you can request these keys
 var client = new Twitter({
     consumer_key: process.env.CONSUMER_KEY,
     consumer_secret: process.env.CONSUMER_SECRET,
@@ -16,32 +19,35 @@ var client = new Twitter({
     access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
-//Get tweets with the word javascript
-client.stream('statuses/filter', {track: 'javascript'}, function(stream){
-    stream.on('data', function(data){
-        console.log(data);
-    });
-    stream.on('error', function(error){
-        console.log(error);
-    });
-});
+//When user signs up, this array will contain usernames
+var users = [];
 
 //EJS setup
 app.set('view engine', 'ejs');
+app.set('client', client);
 
 //Express setup
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Setup body parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+
 var homeRouter = require('./routes/home');
+var streamRouter = require('./routes/stream');
 
 app.use('/', homeRouter);
+app.use('/stream', streamRouter);
 
 //IO setup
 io.on('connection', function(socket){
-    console.log('Mucho bueno');
+    socket.on('user', function(user){
+        users.push(user);
+        console.log(users);
+    });
 });
 
 //Run it, Run it
-server.listen(process.env.PORT||4000, function () {//Use the port that's default on Heroku, else use 3001
-    console.log("Running at port 4000")
+server.listen(process.env.PORT||4000, function () {//Use the port that's default when deployed, else use 4000
+    console.log("Running at port 4000");
 });

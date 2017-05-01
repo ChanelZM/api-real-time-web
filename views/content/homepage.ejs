@@ -1,3 +1,9 @@
 <%- include('../partials/header.ejs') %>
-<h1>Hello World!</h1>
+<h2>Tell us who you are</h2>
+<form method="post" action="/" class="username-form">
+    <label for="username">Name</label>
+    <input type="text" name="username" id="username" />
+    <input type="submit" value="Let's go!" >
+</form>
 <%- include('../partials/footer.ejs') %>
+<script src="username.js"></script>

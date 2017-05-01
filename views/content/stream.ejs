@@ -1,0 +1,40 @@
+<%- include('../partials/header.ejs') %>
+<h2>Welcome <%= username || 'user' %></h2>
+<!--<form class="search-stream-form" method="post">
+    <label for="stream-input">Search twitter stream</label>
+    <input type="text" name="stream-input" id="stream-input" />
+    <input type="submit" />
+</form>-->
+<section id="tweets">
+    <h3>Stupid tweets Trump tweeted</h3>
+    <ul>
+        <% tweets.forEach(function(tweet){ %>
+            <li>
+                <blockquote>
+                    <time>
+                        <%= tweet.created_at %>
+                    </time>
+                    <%= tweet.text %>
+                    <footer>
+                        -<%= tweet.user.name %>
+                    </footer>
+                </blockquote>
+                <section>
+                    <h4>Hate on it</h4>
+                    <div>
+                        <button><span class="dislike">0 </span>👎</button>
+                    </div>
+                    <div>
+                        <h5>Comment</h5>
+                        <form>
+                            <input type="textarea" placeholder="Comment something negative" />
+                            <input type="submit" value="Spread hate" />
+                        </form>
+                    </div>
+                </section>
+            </li>
+        <% }) %>
+    </ul>
+</section>
+<%- include('../partials/footer.ejs') %>
+<script src="searchstream.js"></script>
