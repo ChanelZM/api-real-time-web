@@ -10,6 +10,7 @@ router.get('/', function(req, res){
 
 router.post('/', upload.single(), function(req, res){
     var username = req.body.username;
+    //Get variable from app.js
     var client = req.app.get('client'); //Credits to http://stackoverflow.com/questions/20712712/how-to-pass-variable-from-app-js-to-routes-index-js
 
     //Get tweets with the word submitted by user included
