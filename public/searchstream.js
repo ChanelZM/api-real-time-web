@@ -4,9 +4,9 @@
 
     var tweetSection = document.querySelector('#tweets');
 
-    tweetSection.addEventListener('click', postComment, false);
+    tweetSection.addEventListener('click', dislikeOrPost, false);
 
-    function postComment(e){
+    function dislikeOrPost(e){
         e.preventDefault();
         console.log(e.target);
 
@@ -17,9 +17,11 @@
                 updateCounter(e.target);
             }
             //Else we can assume that the user wants to comment
-            else {
-                console.log('it\'s an input');
-                //socket.emit('comment', )
+            else if(e.target.getAttribute('type') == 'submit') {
+                console.log('submit button');
+                placeComment(e.target);
+            } else {
+                console.log('something else');
             }
         }//Credits to https://www.kirupa.com/html5/handling_events_for_many_elements.htm
     }
@@ -27,8 +29,30 @@
     //Credits to https://jsfiddle.net/n7ukn6av/5/
     function updateCounter(button){
         var dislikeCounter = button.parentNode.querySelector('.dislike-counter');
-        var newDislikeValue = Number(dislikeCounter.innerHTML);
+        var numberCounter = Number(dislikeCounter.innerHTML);
+        numberCounter++;
 
-        dislikeCounter.innerHTML = newDislikeValue++;
+        dislikeCounter.innerHTML = numberCounter;
+    }
+
+    function placeComment(comment){
+        console.log('Someone is trying to submit!');
+
+        var textArea = comment.parentNode.querySelector('.comment-area');
+        var textAreaValue = comment.parentNode.querySelector('.comment-area').value;
+        var commentList = comment.parentNode.parentNode.querySelector('ul');
+
+        console.log(textAreaValue);
+        socket.emit('comment', textAreaValue);
+
+        textArea.value = '';
+
+        socket.on('comment', function(comm){
+            var newElement = document.createElement('li');
+            var newComment = document.createTextNode(comm);
+            newElement.appendChild(newComment);
+            console.log(commentList);
+            commentList.appendChild(newElement);
+        });
     }
 })();

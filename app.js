@@ -45,6 +45,10 @@ io.on('connection', function(socket){
         users.push(user);
         console.log(users);
     });
+
+    socket.on('comment', function(comm){
+      io.emit('comment', comm);
+    });
 });
 
 //Run it, Run it

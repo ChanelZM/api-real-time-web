@@ -1,0 +1,14 @@
+body {
+    background-color: #20000D;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: transparent;
+}
+
+header img {
+    width: 30rem;
+}
