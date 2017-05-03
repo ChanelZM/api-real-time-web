@@ -22,8 +22,6 @@
             else if(e.target.getAttribute('type') == 'submit') {
                 console.log('submit button');
                 placeComment(e.target);
-            } else {
-                console.log('something else');
             }
         }//Credits to https://www.kirupa.com/html5/handling_events_for_many_elements.htm
     }
@@ -38,13 +36,11 @@
     }
 
     function placeComment(comment){
-        console.log('Someone is trying to submit!');
 
         var textArea = comment.parentNode.querySelector('.comment-area');
         var textAreaValue = comment.parentNode.querySelector('.comment-area').value;
         var tweetID = comment.parentNode.parentNode.querySelector('ul').getAttribute('id');
 
-        console.log(tweetID);
         socket.emit('comment', {
             tweetid: tweetID,
             comment: textAreaValue
@@ -58,7 +54,7 @@
         var newElement = document.createElement('li');
         var newComment = document.createTextNode(comm.comment);
         newElement.appendChild(newComment);
-        console.log(targetTweet);
+
         targetTweet.appendChild(newElement);
     });
 })();

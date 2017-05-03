@@ -68,5 +68,12 @@ npm start
 - [x] When user 1 adds multiple comments user 2 sees the comment twice/three times and even more.
 - [x] When a user wants to comment on another tweet the same comment will be added to the previous tweet.
 
+## References
+Special thanks to:
+[Kirupa](https://www.kirupa.com/html5/handling_events_for_many_elements.htm)
+[Laurens](https://github.com/Razpudding)
+[Person on JsFiddle](https://jsfiddle.net/n7ukn6av/5/)
+
+
 ## License
 MIT/X11.
