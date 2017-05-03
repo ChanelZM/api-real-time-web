@@ -46,7 +46,7 @@ io.on('connection', function(socket){
         console.log(users);
     });
 
-    socket.on('comment', function(comm){
+    socket.broadcast.on('comment', function(comm){
       io.emit('comment', comm);
     });
 });

@@ -1,5 +1,7 @@
 /* global io */
 (function(){
+    //var commentList;
+
     var socket = io();
 
     var tweetSection = document.querySelector('#tweets');
@@ -40,19 +42,23 @@
 
         var textArea = comment.parentNode.querySelector('.comment-area');
         var textAreaValue = comment.parentNode.querySelector('.comment-area').value;
-        var commentList = comment.parentNode.parentNode.querySelector('ul');
+        var tweetID = comment.parentNode.parentNode.querySelector('ul').getAttribute('id');
 
-        console.log(textAreaValue);
-        socket.emit('comment', textAreaValue);
+        console.log(tweetID);
+        socket.emit('comment', {
+            tweetid: tweetID,
+            comment: textAreaValue
+        });
 
         textArea.value = '';
-
-        socket.on('comment', function(comm){
-            var newElement = document.createElement('li');
-            var newComment = document.createTextNode(comm);
-            newElement.appendChild(newComment);
-            console.log(commentList);
-            commentList.appendChild(newElement);
-        });
     }
+
+    socket.on('comment', function(comm){
+        var targetTweet = document.getElementById(comm.tweetid);
+        var newElement = document.createElement('li');
+        var newComment = document.createTextNode(comm.comment);
+        newElement.appendChild(newComment);
+        console.log(targetTweet);
+        targetTweet.appendChild(newElement);
+    });
 })();

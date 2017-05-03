@@ -1,14 +1,51 @@
 body {
     background-color: #20000D;
     color: white;
-    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    margin: auto;
     padding: 0;
+    max-width: 60rem;
 }
 
 h1 {
     color: transparent;
 }
 
+h2 {
+    font-family: 'Brush Script MT', cursive;
+}
+
+header {
+    text-align: center;
+}
+
 header img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     width: 30rem;
+}
+
+header h2 {
+    margin-top: 0;
+}
+
+footer {
+    bottom: 1rem;
+    color: #ffe6f0;
+    font-size: 0.8em;
+    font-style: italic;
+    position: absolute;
+}
+
+.username-form {
+    background-color: #563D3D;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1em;
+    width: 20rem;
+}
+
+.username-form h3 {
+    margin-top: 0;
 }

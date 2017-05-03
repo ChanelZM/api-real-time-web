@@ -1,9 +1,11 @@
 <%- include('../partials/header.ejs') %>
-<h2>Tell us who you are</h2>
-<form method="post" action="/" class="username-form">
-    <label for="username">Name</label>
-    <input type="text" name="username" id="username" />
-    <input type="submit" value="Let's go!" >
-</form>
+<main>
+    <form method="post" action="/" class="username-form">
+        <h3>Tell us who you are</h3>
+        <label for="username">Name</label>
+        <input type="text" name="username" id="username" />
+        <input type="submit" value="Let's go!" >
+    </form>
+</main>
 <%- include('../partials/footer.ejs') %>
 <script src="username.js"></script>

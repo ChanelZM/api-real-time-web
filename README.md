@@ -65,8 +65,8 @@ npm start
 - [ ] More options besides disliking.
 
 ## Bugs that need fixing
-- [ ] When user 1 adds multiple comments user 2 sees the comment twice/three times and even more.
-- [ ] When a user wants to comment on another tweet the same comment will be added to the previous tweet.
+- [x] When user 1 adds multiple comments user 2 sees the comment twice/three times and even more.
+- [x] When a user wants to comment on another tweet the same comment will be added to the previous tweet.
 
 ## License
 MIT/X11.
