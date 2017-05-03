@@ -49,6 +49,10 @@ io.on('connection', function(socket){
     socket.broadcast.on('comment', function(comm){
       io.emit('comment', comm);
     });
+
+    socket.on('dislike', function(dislike){
+        io.emit('dislike', dislike);
+    });
 });
 
 //Run it, Run it

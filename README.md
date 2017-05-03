@@ -10,8 +10,8 @@ A live demo can be found on Heroku:
 I've divided what I need to do into two sections: 'To Do' will cover the must haves and 'Wishlist' will cover features that are wanted but not needed.
 
 - [x] User can dislike.
-- [ ] User can only dislike once.
-- [ ] Other users can see the amount of dislikes.
+- [x] User can only dislike once.
+- [x] Other users can see the amount of dislikes.
 - [x] Comments will be added to the HTML.
 - [x] Comments will be added to socket.io.
 - [x] Comments can seen added to the HTML by another person.
