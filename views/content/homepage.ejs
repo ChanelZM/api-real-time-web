@@ -5,6 +5,11 @@
         <label for="username">Name</label>
         <input type="text" name="username" id="username" />
         <input type="submit" value="Let's go!" >
+        <% if(message !== ''){ %>
+            <p>
+                <%= message %>
+            </p>
+        <% } %>
     </form>
 </main>
 <%- include('../partials/footer.ejs') %>

@@ -6,7 +6,30 @@ var socketio = require('socket.io');
 var path = require('path');
 var Twitter = require('twitter');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 var multer = require('multer');
+
+//Database part credits to Smitha https://www.youtube.com/watch?v=c01OHDUpDMU&index=6&list=PLw5h0DiJ-9PC0Wo1NWrNHgKE-mFc_9ftq
+mongoose.Promise = global.Promise;
+
+var URI = 'mongodb://' + process.env.MONGO_USERNAME + ':' + process.env.MONGO_PASSWORD + '@ds129651.mlab.com:29651/commentsanddislikes';
+
+mongoose.connect(URI, function(err){
+    if (err){
+        console.log('No connection');
+    } else {
+        console.log('You\'re connected');
+    }
+});
+
+var commentsSchema = mongoose.Schema({
+    commentTweetId: String,
+    username: String,
+    comment: String,
+    created: {type: Date, default: Date.now}
+});
+
+var Post = mongoose.model('Comment', commentsSchema);
 
 var app = express();
 var server = Server(app);
@@ -21,10 +44,12 @@ var client = new Twitter({
 
 //When user signs up, this array will contain usernames
 var users = [];
+//var comments =
 
 //EJS setup
 app.set('view engine', 'ejs');
 app.set('client', client);
+app.set('users', users);
 
 //Express setup
 app.use(express.static(path.join(__dirname, 'public')));
@@ -41,13 +66,26 @@ app.use('/stream', streamRouter);
 
 //IO setup
 io.on('connection', function(socket){
+    Post.find({}, function(err, docs){
+        if(err) throw err;
+        socket.broadcast.emit('comment-history', docs);
+    });
+
     socket.on('user', function(user){
-        users.push(user);
-        console.log(users);
+//        if(users.indexOf(username)== -1){
+            users.push(user);
+//        } else {
+
+//        }
     });
 
     socket.broadcast.on('comment', function(comm){
-      io.emit('comment', comm);
+        var newComment = new Post(comm);
+        newComment.save(function(err){
+            if (err) throw err;
+
+            io.emit('comment', comm);
+        });
     });
 
     socket.on('dislike', function(dislike){

@@ -33,11 +33,9 @@
         buttonClickCounter == 0 ? numberCounter-- : numberCounter++;
 
         socket.emit('dislike', {
-            disliketweetid: dislikeTweetID,
+            dislikeTweetId: dislikeTweetID,
             dislikes: numberCounter
         });
-
-        //dislikeCounter.innerHTML = numberCounter;
     }
 
     function placeComment(comment){
@@ -48,25 +46,45 @@
 
         //Send the comment with the tweetID to the server
         socket.emit('comment', {
-            commenttweetid: commentTweetID,
-            comment: textAreaValue
+            commentTweetId: commentTweetID,
+            comment: textAreaValue,
+            username: commentUsername
         });
-
         textArea.value = '';
     }
 
+    socket.on('comment-history', function(comments){
+        console.log(comments);
+        for(var i=0; i < comments.length; i++){
+            addComments(comments[i]);
+        }
+    });
+
     socket.on('dislike', function(dislike){
-        var targetTweet = document.getElementById(dislike.disliketweetid);
+        var targetTweet = document.getElementById(dislike.dislikeTweetId);
         targetTweet.innerHTML = dislike.dislikes;
     });
 
     //Add the comment to the right tweet
     socket.on('comment', function(comm){
-        var targetTweet = document.getElementById(comm.commenttweetid);
-        var newElement = document.createElement('li');
-        var newComment = document.createTextNode(comm.comment);
-        newElement.appendChild(newComment);
-
-        targetTweet.appendChild(newElement);
+        addComments(comm);
     });
+
+    function addComments(item){
+        var targetTweet = document.getElementById(item.commentTweetId);
+        var newLi = document.createElement('li');
+        var newHead = document.createElement('h6');
+        var newPar = document.createElement('p');
+        var usernameEl = document.createTextNode(item.username);
+        var newComment = document.createTextNode(item.comment);
+
+        //Append everything
+        newHead.appendChild(usernameEl);
+        newPar.appendChild(newComment);
+
+        newLi.appendChild(newHead);
+        newLi.appendChild(newPar);
+
+        targetTweet.appendChild(newLi);
+    }
 })();

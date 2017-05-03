@@ -15,25 +15,27 @@ I've divided what I need to do into two sections: 'To Do' will cover the must ha
 - [x] Comments will be added to the HTML.
 - [x] Comments will be added to socket.io.
 - [x] Comments can seen added to the HTML by another person.
-- [ ] Check if username already exists.
-- [ ] Attach ID to user.
+- [x] Check if username already exists.
+- [x] Attach username to comment.
 - [ ] Create style.css.
 - [ ] Write a good read me.
+- [ ] Refactor code.
 
 ## Features
-- Get to hate on Donald Trump with likeminded people. :rage:
 - Comment hateful things on Donald Trumps tweets. :speech_balloon:
 - Dislike Donald Trumps tweets. :thumbsdown:
+- Real time visible when somebody dislikes or comments.
+- Get to hate on Donald Trump with likeminded people. :rage:
 - Let your mind flow with negativity. :stuck_out_tongue_closed_eyes:
 
 ## Installation
 ### Packages
 Explanation about the packages I used:
-[Express](https://www.npmjs.com/package/express)
-[Socket.io](https://www.npmjs.com/package/socket.io)
-[Path](https://nodejs.org/api/path.html)
-[Twitter](https://www.npmjs.com/package/twitter)
-[Body-parser](https://www.npmjs.com/package/body-parser)
+[Express](https://www.npmjs.com/package/express),
+[Socket.io](https://www.npmjs.com/package/socket.io),
+[Path](https://nodejs.org/api/path.html),
+[Twitter](https://www.npmjs.com/package/twitter),
+[Body-parser](https://www.npmjs.com/package/body-parser),
 [Multer](https://www.npmjs.com/package/multer)
 
 ## Get started
@@ -67,12 +69,14 @@ npm start
 ## Bugs that need fixing
 - [x] When user 1 adds multiple comments user 2 sees the comment twice/three times and even more.
 - [x] When a user wants to comment on another tweet the same comment will be added to the previous tweet.
+- [ ] Likes don't work with three users.
 
 ## References
 Special thanks to:
-[Kirupa](https://www.kirupa.com/html5/handling_events_for_many_elements.htm)
-[Laurens](https://github.com/Razpudding)
-[Person on JsFiddle](https://jsfiddle.net/n7ukn6av/5/)
+[Kirupa](https://www.kirupa.com/html5/handling_events_for_many_elements.htm),
+[Laurens](https://github.com/Razpudding),
+[Person on JsFiddle](https://jsfiddle.net/n7ukn6av/5/),
+[Smitha Milli](https://www.youtube.com/watch?v=c01OHDUpDMU&index=6&list=PLw5h0DiJ-9PC0Wo1NWrNHgKE-mFc_9ftq)
 
 
 ## License
