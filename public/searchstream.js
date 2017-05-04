@@ -54,7 +54,11 @@
     }
 
     socket.on('comment-history', function(comments){
-        console.log(comments);
+        var allCommentSections = document.querySelectorAll('.comments ul');
+        allCommentSections.forEach(function(section){
+            section.innerHTML='';
+        });
+
         for(var i=0; i < comments.length; i++){
             addComments(comments[i]);
         }

@@ -44,7 +44,6 @@ var client = new Twitter({
 
 //When user signs up, this array will contain usernames
 var users = [];
-//var comments =
 
 //EJS setup
 app.set('view engine', 'ejs');
@@ -68,7 +67,8 @@ app.use('/stream', streamRouter);
 io.on('connection', function(socket){
     Post.find({}, function(err, docs){
         if(err) throw err;
-        socket.broadcast.emit('comment-history', docs);
+        console.log('everytime this function is executed I will appear');
+        io.emit('comment-history', docs);
     });
 
     socket.on('user', function(user){
