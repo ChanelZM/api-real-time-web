@@ -187,9 +187,11 @@ socket.on('comment', function(comm){
 Congrats! All users connected can now real time view the comments that are added.
 
 #### 6.2.5: Mongoose
+Just like Facebook, we don't want to loose our comments after refreshing or server reset. In order to do that we are going to use a database.
+
 - Create an account for free on [Mlab](https://mlab.com/). Choose 'Sandbox' for the creation of your database. Give it a name and create a user that can have access to the database.
 - Add the username and password to the .env file as explained in 6.1.3.
-- To access the database on the server side, open a connection in app.js and test if it's working bij adding a `console.log()`. Message should be viewable in the terminal:
+- To access the database on the server side, open a connection in app.js and test if it's working by adding a `console.log()`. Message should be viewable in the terminal:
 
 ```javascript
 var URI = 'mongodb://' + process.env.MONGO_USERNAME + ':' + process.env.MONGO_PASSWORD + '@ds129651.mlab.com:29651/{yourdatabasename}';
@@ -202,6 +204,52 @@ mongoose.connect(URI, function(err){
     }
 });
 ```
+- If the connection works, it's time to add a Schema. In the schema we are going to define the datatypes:
+
+```javascript
+var commentsSchema = mongoose.Schema({
+    commentTweetId: String,
+    username: String,
+    comment: String,
+    created: {type: Date, default: Date.now}
+});
+
+var Post = mongoose.model('Comment', commentsSchema);
+```
+- Now we want to add every comment that's posted to the created database. For that we are going to create an instance for every post:
+
+```javascript
+socket.broadcast.on('comment', function(comm){
+    var newComment = new Post(comm);
+    newComment.save(function(err){
+        if (err) throw err;
+        io.emit('comment', comm);
+    });
+});
+```
+- After that we want the users to see every comment that has been placed, even when they logged out for a period of time. In order to do that we use this code on connection on the server-side:
+
+```javascript
+Post.find({}, function(err, docs){
+    if(err) throw err;
+    io.emit('comment-history', docs);
+});
+```
+- On the client-side these comments need to be added to the html. To prevent that on a new connection the comments get added a second time (or even a third time), we clear the html tag before adding the comment-history:
+```javascript
+socket.on('comment-history', function(comments){
+    var allCommentSections = document.querySelectorAll('.comments ul');
+    allCommentSections.forEach(function(section){
+        section.innerHTML='';
+    });
+
+    //Loops through every comment and executes addComments for every comment.
+    for(var i=0; i < comments.length; i++){
+        addComments(comments[i]);
+    }
+});
+```
+
 
 - Run application by typing this in your terminal:
 
