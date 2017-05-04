@@ -49,7 +49,7 @@ I've divided what I need to do into two sections: 'To Do' will cover the must ha
 - [ ] Handles source offline.
 - [x] Attach username to comment.
 - [ ] Create style.css.
-- [ ] Write a good read me.
+- [x] Write a good read me.
 - [ ] Refactor code.
 
 ## 4 Features

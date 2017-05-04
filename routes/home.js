@@ -21,7 +21,7 @@ router.post('/', upload.single(), function(req, res){
         //Get tweets with the word submitted by user included
         client.get('statuses/user_timeline', {screen_name: 'realDonaldTrump'}, function(error, tweets, response){
             if(error){
-                throw error
+                res.render('content/noconnection');
             } else {
                 res.render('content/stream', {
                     username : username,
