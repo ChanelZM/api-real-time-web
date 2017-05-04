@@ -1,41 +1,42 @@
 # Judgemental Terra
 ## Table of Contents
-- [1: Introduction](#1:-introduction)
-- [2: Demo](#2:-demo)
-- [3: To-Do](#3:-to-do)
-- [4: Features](#4:-Features)
-- [5: Installation](#5:-installation)
-    - [5.1: Packages](#5.1:-packages)
-    - [5.2: Additional info on Mongoose](#5.2:-additional-info-on-mongoose)
-- [6: Get Started](#6:-get-started)
-    - [6.1: How to clone](#6.1:-how-to-clone)
-        - [6.1.1: Install](#6.1.1:-install)
-        - [6.1.2: Twitter](#6.1.2:-twitter)
-        - [6.1.3: Mongoose & MongoDB]((#6.1.3:-mongoose-&-mongoDB)
-        - [6.1.4: Run application]((#6.1.4:-run-application)
-    - [6.2: How to build](#6.2:-how-to-build)
-        - [6.2.1: Setup app.js](#6.2.1:-setup-app.js)
-        - [6.2.2: User login](#6.2.2:-user-login)
-        - [6.2.3: Twitter](#6.2.3:-twitter)
-        - [6.2.4: Socket.io](#6.2.4:-socket.io)
+- [1: Introduction](#1-introduction)
+- [2: Demo](#2-demo)
+- [3: To-Do](#3-to-do)
+- [4: Features](#4-Features)
+- [5: Installation](#5-installation)
+    - [5.1: Packages](#5.1-packages)
+    - [5.2: Additional info on Mongoose](#5.2-additional-info-on-mongoose)
+- [6: Get Started](#6-get-started)
+    - [6.1: How to clone](#6.1-how-to-clone)
+        - [6.1.1: Install](#6.1.1-install)
+        - [6.1.2: Twitter](#6.1.2-twitter)
+        - [6.1.3: Mongoose & MongoDB]((#6.1.3-mongoose-&-mongoDB)
+        - [6.1.4: Run application]((#6.1.4-run-application)
+    - [6.2: How to build](#6.2-how-to-build)
+        - [6.2.1: Setup app.js](#6.2.1-setup-app.js)
+        - [6.2.2: User login](#6.2.2-user-login)
+        - [6.2.3: Twitter](#6.2.3-twitter)
+        - [6.2.4: Socket.io](#6.2.4-socket.io)
             - [6.2.4.1 Comments](#6.2.4.1-comments)
             - [6.2.4.2 dislikes](#6.2.4.2-dislikes)
-        - [6.2.5: Mongoose](#6.2.5:-mongoose)
-        - [6.2.6: Run application](#6.2.6:-run-application)
--[7: Wishlist](#7:-wishlist)
--[8: Bugs that need fixing](#8:-bugs-that-need-fixing)
--[9: References](#9:-references)
+        - [6.2.5: Mongoose](#6.2.5-mongoose)
+        - [6.2.6: Run application](#6.2.6-run-application)
+- [7: Wishlist](#7-wishlist)
+- [8: Bugs that need fixing](#8-bugs-that-need-fixing)
+- [9: References](#9-references)
+- [License](#license)
 
-## 1: Introduction
+## 1 Introduction
 Judgemental Terra is a real time webapplication where you can hate on Donald Trumps tweets. It contains the twitter stream of Trump and on each individual twitter can be commented hateful things. Or if you don't feel like saying something but you do want to share your disappointment you can just simply dislike the tweet.
 
 **Get to hate on Donald Trump with likeminded people :rage: and let your mind flow with negativity. :stuck_out_tongue_closed_eyes:**
 
-## 2: Demo
+## 2 Demo
 ~~A live demo can be found on Heroku:
 [Judgemental Terra](https://api-real-time-web.herokuapp.com/)~~
 
-## 3: To Do
+## 3 To Do
 I've divided what I need to do into two sections: 'To Do' will cover the must haves and 'Wishlist' will cover features that are wanted but not needed.
 
 - [x] User can dislike.
@@ -51,15 +52,15 @@ I've divided what I need to do into two sections: 'To Do' will cover the must ha
 - [ ] Write a good read me.
 - [ ] Refactor code.
 
-## 4: Features
+## 4 Features
 - Comment hateful things on Donald Trumps tweets with own username. :speech_balloon:
 - Dislike Donald Trumps tweets. :thumbsdown:
 - Real time visible when somebody dislikes or comments.
 - Connection with MongoDB to save comments.
 - **When a user logs in, previous comments will be loaded on the right spot (!!! so proud of myself!!).**
 
-## 5: Installation
-### 5.1: Packages
+## 5 Installation
+### 5.1 Packages
 Explanation about the packages I used:
 [Express](https://www.npmjs.com/package/express),
 [Socket.io](https://www.npmjs.com/package/socket.io),
@@ -69,12 +70,12 @@ Explanation about the packages I used:
 [Multer](https://www.npmjs.com/package/multer)
 [Mongoose](https://www.npmjs.com/package/mongoose)
 
-### 5.2: Additional info on Mongoose
+### 5.2 Additional info on Mongoose
 To easily read and write a database I created on MongoDB, I used a node-module called Mongoose. With Mongoose I add comments to the database.
 
-## 6: Get started
-### 6.1: How to clone
-#### 6.1.1: Install
+## 6 Get started
+### 6.1 How to clone
+#### 6.1.1 Install
 - Clone my repo: https://github.com/ChanelZM/api-real-time-web.git
 - Open terminal and type:
 
@@ -82,7 +83,7 @@ To easily read and write a database I created on MongoDB, I used a node-module c
 $ npm install
 ```
 
-#### 6.1.2: Twitter
+#### 6.1.2 Twitter
 - Create an account on Twitter.
 - Go to [dev twitter](https://dev.twitter.com/) and create an app. After submitting the form you get a consumer key and a consumer secret.
 - Create access token and access token secret for yourself on the same page.
@@ -95,7 +96,7 @@ ACCESS_TOKEN_KEY = 'your access token key'
 ACCESS_TOKEN_SECRET = 'your access token secret'
 ```
 
-#### 6.1.3: Mongoose & MongoDB
+#### 6.1.3 Mongoose & MongoDB
 - Create an account on [Mlab](https://mlab.com/).
 - Create a database and user.
 - Add the username and password of the user to the .env file:
@@ -105,7 +106,7 @@ MONGO_USERNAME = 'youruser'
 MONGO_PASSWORD = 'youruserspassword'
 ```
 
-#### 6.1.4: Run application
+#### 6.1.4 Run application
 - Run application by typing this in your terminal:
 
 ```
@@ -113,8 +114,8 @@ $ npm start
 ```
 - The website is viewable on localhost:4000;
 
-### 6.2: How to build
-#### 6.2.1: Setup app.js
+### 6.2 How to build
+#### 6.2.1 Setup app.js
 Setup app.js as usual, install all packages, require all packages and create directories and content as usual.
 
 - Additionally install nodemon and add this to your package.json scripts object:
@@ -123,7 +124,7 @@ Setup app.js as usual, install all packages, require all packages and create dir
 "start": "node app.js"
 ```
 
-#### 6.2.2: User login
+#### 6.2.2 User login
 Now we're going to create a simple user 'login'.
 
 - On the homepage create an input field and a submit button. The user can input their wanted username. In the javascript server sided file create a function that handles the post and retrieving the username.
@@ -135,7 +136,7 @@ router.post('/', upload.single(), function(req, res){
 ```
 - In advance, create a page which will be rendered when the user is logged in, containing the stream of tweets.
 
-#### 6.2.3: Twitter
+#### 6.2.3 Twitter
 Next thing to do is to get a connection with the twitter api.
 
 - Create an account and app as explained in section 6.1.2.
@@ -213,7 +214,7 @@ socket.on('comment', function(comm){
 
 Congrats! All users connected can now real time view the comments that are added.
 
-#### 6.2.5: Mongoose
+#### 6.2.5 Mongoose
 Just like Facebook, we don't want to loose our comments after refreshing or server reset. In order to do that we are going to use a database.
 
 - Create an account for free on [Mlab](https://mlab.com/). Choose 'Sandbox' for the creation of your database. Give it a name and create a user that can have access to the database.
@@ -277,7 +278,7 @@ socket.on('comment-history', function(comments){
 });
 ```
 
-#### 6.2.6: Run application
+#### 6.2.6 Run application
 - Run application by typing this in your terminal:
 
 ```
@@ -286,19 +287,19 @@ $ npm start
 - The website is viewable on localhost:4000;
 - Congratulations! Now you can hate on Trump!
 
-## 7: Wishlist
+## 7 Wishlist
 - [ ] Create full sign in/sign up.
 - [x] Attach database.
 - [ ] Responsive design.
 - [ ] Extra twitter stream that follows 'America first' hashtag.
 - [ ] More options besides disliking.
 
-## 8: Bugs that need fixing
+## 8 Bugs that need fixing
 - [x] #1 When user 1 adds multiple comments user 2 sees the comment twice/three times and even more.
 - [x] #2 When a user wants to comment on another tweet the same comment will be added to the previous tweet.
 - [ ] #3 Likes don't work with three users.
 
-## 9: References
+## 9 References
 Special thanks to:
 [Kirupa](https://www.kirupa.com/html5/handling_events_for_many_elements.htm) for explaining using one event for several elements,
 [Laurens](https://github.com/Razpudding) for helping me with bug #1 and #2 ,
