@@ -1,4 +1,31 @@
 # Judgemental Terra
+## Table of Contents
+- [1: Introduction](#1:-introduction)
+- [2: Demo](#2:-demo)
+- [3: To-Do](#3:-to-do)
+- [4: Features](#4:-Features)
+- [5: Installation](#5:-installation)
+    - [5.1: Packages](#5.1:-packages)
+    - [5.2: Additional info on Mongoose](#5.2:-additional-info-on-mongoose)
+- [6: Get Started](#6:-get-started)
+    - [6.1: How to clone](#6.1:-how-to-clone)
+        - [6.1.1: Install](#6.1.1:-install)
+        - [6.1.2: Twitter](#6.1.2:-twitter)
+        - [6.1.3: Mongoose & MongoDB]((#6.1.3:-mongoose-&-mongoDB)
+        - [6.1.4: Run application]((#6.1.4:-run-application)
+    - [6.2: How to build](#6.2:-how-to-build)
+        - [6.2.1: Setup app.js](#6.2.1:-setup-app.js)
+        - [6.2.2: User login](#6.2.2:-user-login)
+        - [6.2.3: Twitter](#6.2.3:-twitter)
+        - [6.2.4: Socket.io](#6.2.4:-socket.io)
+            - [6.2.4.1 Comments](#6.2.4.1-comments)
+            - [6.2.4.2 dislikes](#6.2.4.2-dislikes)
+        - [6.2.5: Mongoose](#6.2.5:-mongoose)
+        - [6.2.6: Run application](#6.2.6:-run-application)
+-[7: Wishlist](#7:-wishlist)
+-[8: Bugs that need fixing](#8:-bugs-that-need-fixing)
+-[9: References](#9:-references)
+
 ## 1: Introduction
 Judgemental Terra is a real time webapplication where you can hate on Donald Trumps tweets. It contains the twitter stream of Trump and on each individual twitter can be commented hateful things. Or if you don't feel like saying something but you do want to share your disappointment you can just simply dislike the tweet.
 
@@ -250,12 +277,14 @@ socket.on('comment-history', function(comments){
 });
 ```
 
-
+#### 6.2.6: Run application
 - Run application by typing this in your terminal:
 
 ```
 $ npm start
 ```
+- The website is viewable on localhost:4000;
+- Congratulations! Now you can hate on Trump!
 
 ## 7: Wishlist
 - [ ] Create full sign in/sign up.
