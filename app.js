@@ -48,7 +48,6 @@ var users = [];
 //EJS setup
 app.set('view engine', 'ejs');
 app.set('client', client);
-app.set('users', users);
 
 //Express setup
 app.use(express.static(path.join(__dirname, 'public')));

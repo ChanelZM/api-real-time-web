@@ -1,12 +1,14 @@
 # Judgemental Terra
-## Introduction
+## 1: Introduction
 Judgemental Terra is a real time webapplication where you can hate on Donald Trumps tweets. It contains the twitter stream of Trump and on each individual twitter can be commented hateful things. Or if you don't feel like saying something but you do want to share your disappointment you can just simply dislike the tweet.
 
-## Demo
-A live demo can be found on Heroku:
-[Judgemental Terra](https://api-real-time-web.herokuapp.com/)
+**Get to hate on Donald Trump with likeminded people :rage: and let your mind flow with negativity. :stuck_out_tongue_closed_eyes:**
 
-## To Do
+## 2: Demo
+~~A live demo can be found on Heroku:
+[Judgemental Terra](https://api-real-time-web.herokuapp.com/)~~
+
+## 3: To Do
 I've divided what I need to do into two sections: 'To Do' will cover the must haves and 'Wishlist' will cover features that are wanted but not needed.
 
 - [x] User can dislike.
@@ -16,23 +18,21 @@ I've divided what I need to do into two sections: 'To Do' will cover the must ha
 - [x] Comments will be added to socket.io.
 - [x] Comments can seen added to the HTML by another person.
 - [ ] Check if username already exists.
+- [ ] Handles source offline.
 - [x] Attach username to comment.
 - [ ] Create style.css.
 - [ ] Write a good read me.
 - [ ] Refactor code.
 
-## Features
-- Comment hateful things on Donald Trumps tweets. :speech_balloon:
+## 4: Features
+- Comment hateful things on Donald Trumps tweets with own username. :speech_balloon:
 - Dislike Donald Trumps tweets. :thumbsdown:
 - Real time visible when somebody dislikes or comments.
 - Connection with MongoDB to save comments.
 - **When a user logs in, previous comments will be loaded on the right spot (!!! so proud of myself!!).**
-- User can view previous comments.
-- Get to hate on Donald Trump with likeminded people. :rage:
-- Let your mind flow with negativity. :stuck_out_tongue_closed_eyes:
 
-## Installation
-### Packages
+## 5: Installation
+### 5.1: Packages
 Explanation about the packages I used:
 [Express](https://www.npmjs.com/package/express),
 [Socket.io](https://www.npmjs.com/package/socket.io),
@@ -40,18 +40,22 @@ Explanation about the packages I used:
 [Twitter](https://www.npmjs.com/package/twitter),
 [Body-parser](https://www.npmjs.com/package/body-parser),
 [Multer](https://www.npmjs.com/package/multer)
+[Mongoose](https://www.npmjs.com/package/mongoose)
 
-#### Mongoose
+### 5.2: Additional info on Mongoose
 To easily read and write a database I created on MongoDB, I used a node-module called Mongoose. With Mongoose I add comments to the database.
 
-## Get started
-### How to clone
+## 6: Get started
+### 6.1: How to clone
+#### 6.1.1: Install
 - Clone my repo: https://github.com/ChanelZM/api-real-time-web.git
 - Open terminal and type:
 
 ```
-npm install
+$ npm install
 ```
+
+#### 6.1.2: Twitter
 - Create an account on Twitter.
 - Go to [dev twitter](https://dev.twitter.com/) and create an app. After submitting the form you get a consumer key and a consumer secret.
 - Create access token and access token secret for yourself on the same page.
@@ -63,6 +67,8 @@ CONSUMER_SECRET = 'your consumer secret'
 ACCESS_TOKEN_KEY = 'your access token key'
 ACCESS_TOKEN_SECRET = 'your access token secret'
 ```
+
+#### 6.1.3: Mongoose & MongoDB
 - Create an account on [Mlab](https://mlab.com/).
 - Create a database and user.
 - Add the username and password of the user to the .env file:
@@ -71,17 +77,119 @@ ACCESS_TOKEN_SECRET = 'your access token secret'
 MONGO_USERNAME = 'youruser'
 MONGO_PASSWORD = 'youruserspassword'
 ```
+
+#### 6.1.4: Run application
 - Run application by typing this in your terminal:
 
 ```
-npm start
+$ npm start
 ```
 - The website is viewable on localhost:4000;
 
-### How to build
+### 6.2: How to build
+#### 6.2.1: Setup app.js
+Setup app.js as usual, install all packages, require all packages and create directories and content as usual.
 
-#### Mongoose
-- Create an account for free on [Mlab](https://mlab.com/). Choose 'Sandbox' for the creation of your database. Give it a name and create a user that can have access to the database. To access the database on the server side, open a connection in app.js and test if it's working bij adding a `console.log()`. Message should be viewable in the terminal:
+- Additionally install nodemon and add this to your package.json scripts object:
+
+```
+"start": "node app.js"
+```
+
+#### 6.2.2: User login
+Now we're going to create a simple user 'login'.
+
+- On the homepage create an input field and a submit button. The user can input their wanted username. In the javascript server sided file create a function that handles the post and retrieving the username.
+
+```javascript
+router.post('/', upload.single(), function(req, res){
+    var username = req.body.username;
+});
+```
+- In advance, create a page which will be rendered when the user is logged in, containing the stream of tweets.
+
+#### 6.2.3: Twitter
+Next thing to do is to get a connection with the twitter api.
+
+- Create an account and app as explained in section 6.1.2.
+- If you want to upload the code to Github, create a .gitignore and place node-modules and .env into the file.
+- To get access to the twitter REST API create a new instance of the Twitter object:
+
+```javascript
+var client = new Twitter({
+    consumer_key: process.env.CONSUMER_KEY,
+    consumer_secret: process.env.CONSUMER_SECRET,
+    access_token_key: process.env.ACCESS_TOKEN_KEY,
+    access_token_secret: process.env.ACCESS_TOKEN_SECRET
+});
+```
+- And to get a connection with Twitter API outside of app.js and inside a router, add this to app.js.
+
+```javascript
+app.set('client', client);
+```
+- Now it's time to retrieve tweets from Mr. Donald J Trump. In the same file and function where we retrieve the users username, we're going to retrieve tweets. And for that we need the client variable which we previously saved:
+
+```javascript
+var client = req.app.get('client');
+```
+- Retrieve tweets with client. If there is an error, tell us the error. If the request is a success render the page with Trumps tweets:
+
+```javascript
+client.get('statuses/user_timeline', {screen_name: 'realDonaldTrump'}, function(error, tweets, response){
+    if(error){
+        throw error
+    } else {
+        res.render('content/{yourstreampage}', {
+            username : username,
+            tweets : tweets
+        });
+    }
+});
+```
+- On the streaming page create a loop that loops through the retrieved tweets and fills in elements.
+- Congratulations! You can now view tweets of Trump on your own page!.
+
+#### 6.2.4 Socket.io
+After retrieving the tweets, we want to add comments and dislikes.
+
+##### 6.2.4.1 Comments
+- If you didn't do it already, create an input field and submit button and add them to the loop.
+- On the client-side we need to add an event to to the input fields. It's a lot of work to add events for every input field plus it's not very DRY so we are going to add a addEventListener to the parent and use target to find out which submit button was triggered. [Kirupa](https://www.kirupa.com/html5/handling_events_for_many_elements.htm) has a great post on how to that.
+- Add the tweet-id to the tweet in the html so that when we emit with socket and get a message back, we can use the ID to place the right comment under the right tweet and add it to the HTML. After that clear the input field:
+
+```javascript
+socket.emit('comment', {
+    commentTweetId: commentTweetID,
+    comment: textAreaValue,
+    username: commentUsername
+});
+textArea.value = '';
+```
+- On the server-side we need to handle the comment. This basically sends the comment to every person connected accept the sender, because we already added the comment to the HTML:
+
+```javascript
+socket.broadcast.on('comment', function(comm){
+    io.emit('comment', comm);
+});
+```
+- On the client-side receivers of the comment need to add it to the html too. Create a function that will add the data to the HTML. Select the right parent by using the unique id which is included in the data.
+
+```javascript
+socket.on('comment', function(comm){
+    addComments(comm);
+});
+```
+
+##### 6.2.4.2 dislikes
+~
+
+Congrats! All users connected can now real time view the comments that are added.
+
+#### 6.2.5: Mongoose
+- Create an account for free on [Mlab](https://mlab.com/). Choose 'Sandbox' for the creation of your database. Give it a name and create a user that can have access to the database.
+- Add the username and password to the .env file as explained in 6.1.3.
+- To access the database on the server side, open a connection in app.js and test if it's working bij adding a `console.log()`. Message should be viewable in the terminal:
 
 ```javascript
 var URI = 'mongodb://' + process.env.MONGO_USERNAME + ':' + process.env.MONGO_PASSWORD + '@ds129651.mlab.com:29651/{yourdatabasename}';
@@ -98,27 +206,26 @@ mongoose.connect(URI, function(err){
 - Run application by typing this in your terminal:
 
 ```
-npm start
+$ npm start
 ```
 
-## Wishlist
+## 7: Wishlist
 - [ ] Create full sign in/sign up.
 - [x] Attach database.
 - [ ] Responsive design.
 - [ ] Extra twitter stream that follows 'America first' hashtag.
 - [ ] More options besides disliking.
 
-## Bugs that need fixing
-- [x] When user 1 adds multiple comments user 2 sees the comment twice/three times and even more.
-- [x] When a user wants to comment on another tweet the same comment will be added to the previous tweet.
-- [ ] Likes don't work with three users.
+## 8: Bugs that need fixing
+- [x] #1 When user 1 adds multiple comments user 2 sees the comment twice/three times and even more.
+- [x] #2 When a user wants to comment on another tweet the same comment will be added to the previous tweet.
+- [ ] #3 Likes don't work with three users.
 
-## References
+## 9: References
 Special thanks to:
-[Kirupa](https://www.kirupa.com/html5/handling_events_for_many_elements.htm),
-[Laurens](https://github.com/Razpudding),
-[Person on JsFiddle](https://jsfiddle.net/n7ukn6av/5/),
-[Smitha Milli](https://www.youtube.com/watch?v=c01OHDUpDMU&index=6&list=PLw5h0DiJ-9PC0Wo1NWrNHgKE-mFc_9ftq)
+[Kirupa](https://www.kirupa.com/html5/handling_events_for_many_elements.htm) for explaining using one event for several elements,
+[Laurens](https://github.com/Razpudding) for helping me with bug #1 and #2 ,
+[Smitha Milli](https://www.youtube.com/watch?v=c01OHDUpDMU&index=6&list=PLw5h0DiJ-9PC0Wo1NWrNHgKE-mFc_9ftq) for extremely helpful tutorials on socket.io.
 
 
 ## License
