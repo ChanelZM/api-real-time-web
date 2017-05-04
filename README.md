@@ -33,8 +33,8 @@ Judgemental Terra is a real time webapplication where you can hate on Donald Tru
 **Get to hate on Donald Trump with likeminded people :rage: and let your mind flow with negativity. :stuck_out_tongue_closed_eyes:**
 
 ## 2 Demo
-~~A live demo can be found on Heroku:
-[Judgemental Terra](https://api-real-time-web.herokuapp.com/)~~
+A live demo can be found on Heroku:
+[Judgemental Terra](https://api-real-time-web.herokuapp.com/)
 
 ## 3 To Do
 I've divided what I need to do into two sections: 'To Do' will cover the must haves and 'Wishlist' will cover features that are wanted but not needed.
@@ -46,7 +46,7 @@ I've divided what I need to do into two sections: 'To Do' will cover the must ha
 - [x] Comments will be added to socket.io.
 - [x] Comments can seen added to the HTML by another person.
 - [ ] Check if username already exists.
-- [ ] Handles source offline.
+- [x] Handles source offline.
 - [x] Attach username to comment.
 - [ ] Create style.css.
 - [x] Write a good read me.
