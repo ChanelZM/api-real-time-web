@@ -27,7 +27,13 @@ var commentsSchema = mongoose.Schema({
     created: {type: Date, default: Date.now}
 });
 
+var dislikeSchema = mongoose.Schema({
+    dislikeTweetId: String,
+    dislikes: Number
+})
+
 var Post = mongoose.model('Comment', commentsSchema);
+var Dislike = mongoose.model('Dislike', dislikeSchema);
 
 //Setup to get access to twitter stream, on twitter you can request these keys
 var client = new Twitter({
@@ -64,26 +70,39 @@ var users = [];
 
 //IO setup
 io.on('connection', function(socket){
+    //On new connection, render the amount of dislikes from the database
+    Dislike.find({}, function(err, docs){
+        if(err) throw err;
+        io.emit('dislike-history', docs);
+    });
+
+    //On new connection, render the comments from the database
     Post.find({}, function(err, docs){
         if(err) throw err;
         io.emit('comment-history', docs);
     });
 
+    //Save users in 'user'
     socket.on('user', function(user){
             users.push(user);
     });
 
+    //On new comment add comment to database and emit
     socket.broadcast.on('comment', function(comm){
         var newComment = new Post(comm);
         newComment.save(function(err){
             if (err) throw err;
-
             io.emit('comment', comm);
         });
     });
 
-    socket.on('dislike', function(dislike){
-        io.emit('dislike', dislike);
+    //On new dislike add dislike to database and emit
+    socket.broadcast.on('dislike', function(dislike){
+        var newDislike = new Dislike(dislike);
+        newDislike.save(function(err){
+            if (err) throw err;
+            io.emit('dislike', dislike);
+        });
     });
 });
 

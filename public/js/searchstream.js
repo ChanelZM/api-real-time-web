@@ -3,9 +3,8 @@
     'use strict'
 
     var socket = io();
-    var buttonClickCounter = 0;
 
-    //When page loads, comment history is sent from the server to browser
+    //When page loads, comment history is sent from the server to browser (new connection)
     socket.on('comment-history', function(comments){
         //Clear all comment sections
         var allCommentSections = document.querySelectorAll('.comments ul');
@@ -19,6 +18,13 @@
         }
     });
 
+    //When page loads, dislike histoy is sent from the server to browser (new connection)
+    socket.on('dislike-history', function(dislikes){
+        for(var i=0; i < dislikes.length; i++){
+            dislike.render(dislikes[i]);
+        }
+    })
+
     //If the user clicks somewhere in #tweets
     document.querySelector('#tweets').addEventListener('click', checkIfDislikeOrPost, false);
 
@@ -29,9 +35,8 @@
         //Check if the target is not the same as the parent
         if(e.target !== e.currentTarget){
             //If the target is the dislike button
-            if(e.target.className == 'dislike-button' || e.target.className == 'dislike-counter'){
-                buttonClickCounter == 0 ? buttonClickCounter++ : buttonClickCounter--;
-                updateCounter(e.target);
+            if(e.target.className.includes('dislike-button') == true || e.target.className == 'dislike-counter'){
+                dislike.update(e.target);
             }
             //Else we can assume that the user wants to comment
             else if(e.target.getAttribute('type') == 'submit') {
@@ -59,12 +64,12 @@
         //add the comment(s) to the right tweet
         render: function(item){
             //Create elements for the username and comment
-            var targetTweet = document.getElementById(item.commentTweetId);
-            var newLi = document.createElement('li');
-            var newHead = document.createElement('h6');
-            var newPar = document.createElement('p');
-            var usernameEl = document.createTextNode(item.username);
-            var newComment = document.createTextNode(item.comment);
+            var targetTweet = document.getElementById(item.commentTweetId),
+                newLi = document.createElement('li'),
+                newHead = document.createElement('h6'),
+                newPar = document.createElement('p'),
+                usernameEl = document.createTextNode(item.username),
+                newComment = document.createTextNode(item.comment);
 
             //Append text to elements
             newHead.appendChild(usernameEl);
@@ -76,28 +81,45 @@
             //Append element to parent
             targetTweet.appendChild(newLi);
         }
-    }
+    };
 
-    //Credits to https://jsfiddle.net/n7ukn6av/5/
-    //Update number in dislikebutton
-    function updateCounter(button){
-        var dislikeCounter = button.parentNode.querySelector('.dislike-counter');
-        var dislikeTweetID = dislikeCounter.getAttribute('id');
-        var numberCounter = Number(dislikeCounter.innerHTML);
+    var dislike = {
+        //Credits to https://jsfiddle.net/n7ukn6av/5/
+        //Update number in dislikebutton
+        update: function(el){
+            var dislikeButton = el.parentNode.querySelector('.dislike-button'),
+                dislikeCounter = el.parentNode.querySelector('.dislike-counter'),
+                dislikeTweetID = dislikeCounter.getAttribute('id'),
+                numberCounter = Number(dislikeCounter.innerHTML);
 
-        buttonClickCounter == 0 ? numberCounter-- : numberCounter++;
-
+        //Check if user already disliked, if not at dislike
+            if(dislikeButton.getAttribute('class') == 'dislike-button'){
+                dislikeButton.classList.add('liked');
+                numberCounter++;
+                dislike.emits(dislikeTweetID, numberCounter);
+            } else {
+                dislikeButton.classList.remove('liked');
+                numberCounter--;
+                dislike.emits(dislikeTweetID, numberCounter);
+            }
+        },
         //Emit the amount of dislikes so that others can see it.
-        socket.emit('dislike', {
-            dislikeTweetId: dislikeTweetID,
-            dislikes: numberCounter
-        });
+        emits: function(tweetId, dislikes){
+            socket.emit('dislike', {
+                dislikeTweetId: tweetId,
+                dislikes: dislikes
+            });
+        },
+        //Add the amount of dislikes to the page
+        render: function(dis){
+            var targetTweet = document.getElementById(dis.dislikeTweetId);
+            targetTweet.innerHTML = dis.dislikes;
+        }
     }
 
     //When the server sends a dislike, increment the number of likes
-    socket.on('dislike', function(dislike){
-        var targetTweet = document.getElementById(dislike.dislikeTweetId);
-        targetTweet.innerHTML = dislike.dislikes;
+    socket.on('dislike', function(dis){
+        dislike.render(dis);
     });
 
     //When the server sends a comment, execute renderComments
