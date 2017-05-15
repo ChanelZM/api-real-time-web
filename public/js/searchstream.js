@@ -15,7 +15,7 @@
 
         //Add the comments to the HTML
         for(var i=0; i < comments.length; i++){
-            renderComments(comments[i]);
+            comment.render(comments[i]);
         }
     });
 
@@ -35,9 +35,47 @@
             }
             //Else we can assume that the user wants to comment
             else if(e.target.getAttribute('type') == 'submit') {
-                emitComment(e.target);
+                comment.emits(e.target);
             }
         }//Credits to https://www.kirupa.com/html5/handling_events_for_many_elements.htm
+    }
+
+    var comment = {
+        //Get the input of the user and send it to the server
+        emits: function(myComment){
+            var textArea = comment.parentNode.querySelector('.comment-area');
+            var textAreaValue = comment.parentNode.querySelector('.comment-area').value;
+            var commentTweetID = comment.parentNode.parentNode.querySelector('ul').getAttribute('id');
+
+            //Send the comment with the tweetID to the server
+            socket.emit('comment', {
+                commentTweetId: commentTweetID,
+                comment: textAreaValue,
+                username: commentUsername
+            });
+            //Clear inputfield again
+            textArea.value = '';
+        },
+        //add the comment(s) to the right tweet
+        render: function(item){
+            //Create elements for the username and comment
+            var targetTweet = document.getElementById(item.commentTweetId);
+            var newLi = document.createElement('li');
+            var newHead = document.createElement('h6');
+            var newPar = document.createElement('p');
+            var usernameEl = document.createTextNode(item.username);
+            var newComment = document.createTextNode(item.comment);
+
+            //Append text to elements
+            newHead.appendChild(usernameEl);
+            newPar.appendChild(newComment);
+
+            newLi.appendChild(newHead);
+            newLi.appendChild(newPar);
+
+            //Append element to parent
+            targetTweet.appendChild(newLi);
+        }
     }
 
     //Credits to https://jsfiddle.net/n7ukn6av/5/
@@ -56,22 +94,6 @@
         });
     }
 
-    //Get the input of the user and send it to the server
-    function emitComment(comment){
-        var textArea = comment.parentNode.querySelector('.comment-area');
-        var textAreaValue = comment.parentNode.querySelector('.comment-area').value;
-        var commentTweetID = comment.parentNode.parentNode.querySelector('ul').getAttribute('id');
-
-        //Send the comment with the tweetID to the server
-        socket.emit('comment', {
-            commentTweetId: commentTweetID,
-            comment: textAreaValue,
-            username: commentUsername
-        });
-        //Clear inputfield again
-        textArea.value = '';
-    }
-
     //When the server sends a dislike, increment the number of likes
     socket.on('dislike', function(dislike){
         var targetTweet = document.getElementById(dislike.dislikeTweetId);
@@ -80,27 +102,7 @@
 
     //When the server sends a comment, execute renderComments
     socket.on('comment', function(comm){
-        renderComments(comm);
+        comment.render(comm);
     });
 
-    //add the comment(s) to the right tweet
-    function renderComments(item){
-        //Create elements for the username and comment
-        var targetTweet = document.getElementById(item.commentTweetId);
-        var newLi = document.createElement('li');
-        var newHead = document.createElement('h6');
-        var newPar = document.createElement('p');
-        var usernameEl = document.createTextNode(item.username);
-        var newComment = document.createTextNode(item.comment);
-
-        //Append text to elements
-        newHead.appendChild(usernameEl);
-        newPar.appendChild(newComment);
-
-        newLi.appendChild(newHead);
-        newLi.appendChild(newPar);
-
-        //Append element to parent
-        targetTweet.appendChild(newLi);
-    }
 })();
