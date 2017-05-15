@@ -17,8 +17,6 @@ var URI = 'mongodb://' + process.env.MONGO_USERNAME + ':' + process.env.MONGO_PA
 mongoose.connect(URI, function(err){
     if (err){
         console.log('No connection');
-    } else {
-        console.log('You\'re connected');
     }
 });
 
@@ -31,9 +29,6 @@ var commentsSchema = mongoose.Schema({
 
 var Post = mongoose.model('Comment', commentsSchema);
 
-var app = express();
-var server = Server(app);
-var io = socketio(server);
 //Setup to get access to twitter stream, on twitter you can request these keys
 var client = new Twitter({
     consumer_key: process.env.CONSUMER_KEY,
@@ -42,19 +37,14 @@ var client = new Twitter({
     access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
-//When user signs up, this array will contain usernames
-var users = [];
+//Define variables.
+var app = express();
+var server = Server(app);
+var io = socketio(server);
 
-//EJS setup
+//EJS setup & twitter setup, reusable in routes
 app.set('view engine', 'ejs');
 app.set('client', client);
-
-//Express setup
-app.use(express.static(path.join(__dirname, 'public')));
-
-//Setup body parser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:true}));
 
 var homeRouter = require('./routes/home');
 var streamRouter = require('./routes/stream');
@@ -62,20 +52,25 @@ var streamRouter = require('./routes/stream');
 app.use('/', homeRouter);
 app.use('/stream', streamRouter);
 
+//Path to public folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+//Setup body parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+
+//When user signs up, this array will contain usernames
+var users = [];
+
 //IO setup
 io.on('connection', function(socket){
     Post.find({}, function(err, docs){
         if(err) throw err;
-        console.log('everytime this function is executed I will appear');
         io.emit('comment-history', docs);
     });
 
     socket.on('user', function(user){
-//        if(users.indexOf(username)== -1){
             users.push(user);
-//        } else {
-
-//        }
     });
 
     socket.broadcast.on('comment', function(comm){

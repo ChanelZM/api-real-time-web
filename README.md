@@ -2,7 +2,7 @@
 ## Table of Contents
 - [1: Introduction](#1-introduction)
 - [2: Demo](#2-demo)
-- [3: To-Do](#3-to-do)
+- [3: To Do](#3-to-do)
 - [4: Features](#4-Features)
 - [5: Installation](#5-installation)
     - [5.1: Packages](#5.1-packages)
