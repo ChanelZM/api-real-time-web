@@ -37,20 +37,13 @@ var client = new Twitter({
     access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
-//Define variables.
 var app = express();
 var server = Server(app);
 var io = socketio(server);
 
-//EJS setup & twitter setup, reusable in routes
+//EJS setup
 app.set('view engine', 'ejs');
 app.set('client', client);
-
-var homeRouter = require('./routes/home');
-var streamRouter = require('./routes/stream');
-
-app.use('/', homeRouter);
-app.use('/stream', streamRouter);
 
 //Path to public folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -58,6 +51,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Setup body parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+
+//Routes to JS files
+var homeRouter = require('./routes/home');
+var streamRouter = require('./routes/stream');
+
+app.use('/', homeRouter);
+app.use('/stream', streamRouter);
 
 //When user signs up, this array will contain usernames
 var users = [];
@@ -88,6 +88,4 @@ io.on('connection', function(socket){
 });
 
 //Run it, Run it
-server.listen(process.env.PORT||4000, function () {//Use the port that's default when deployed, else use 4000
-    console.log("Running at port 4000");
-});
+server.listen(process.env.PORT||4000, null);

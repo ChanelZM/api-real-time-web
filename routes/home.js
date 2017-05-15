@@ -16,11 +16,10 @@ router.post('/', upload.single(), function(req, res){
     //Get variable from app.js
     var client = req.app.get('client'); //Credits to http://stackoverflow.com/questions/20712712/how-to-pass-variable-from-app-js-to-routes-index-js
 
-    //setInterval(function(){
-        console.log('set interval is working');
-        //Get tweets with the word submitted by user included
+        //Get recent tweets from trump
         client.get('statuses/user_timeline', {screen_name: 'realDonaldTrump'}, function(error, tweets, response){
             if(error){
+                //If it didn't work render this page
                 res.render('content/noconnection');
             } else {
                 res.render('content/stream', {
@@ -29,12 +28,6 @@ router.post('/', upload.single(), function(req, res){
                 });
             }
         });
-    //}, 3000);
-
-    // res.render('content/homepage', {
-    //     message: 'Username already exists'
-    // });
-    //}
 });
 
 module.exports = router;
