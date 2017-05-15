@@ -1,5 +1,7 @@
 /* global io */
 (function(){
+    'use strict'
+    
     var socket = io();
     var buttonClickCounter = 0;
 

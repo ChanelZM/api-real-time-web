@@ -1,5 +1,6 @@
 /* global io */
 (function(){
+    'use strict'
     var socket = io();
 
     //Select inputs
