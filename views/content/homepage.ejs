@@ -1,15 +1,18 @@
 <%- include('../partials/header.ejs') %>
 <main>
+    <h2>Let's talk sh*t about Donald J. Trump</h2>
     <form method="post" action="/" class="username-form">
-        <h3>Tell us who you are</h3>
-        <label for="username">Name</label>
-        <input type="text" name="username" id="username" />
-        <input type="submit" value="Let's go!" >
-        <% if(message !== ''){ %>
-            <p>
-                <%= message %>
-            </p>
-        <% } %>
+        <div>
+            <h3>Tell us who you are</h3>
+            <label for="username">My name is</label>
+            <input type="text" name="username" id="username" />
+            <input type="submit" value="Enter our world" >
+            <% if(message !== ''){ %>
+                <p>
+                    <%= message %>
+                </p>
+            <% } %>
+        </div>
     </form>
 </main>
 <%- include('../partials/footer.ejs') %>

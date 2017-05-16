@@ -7,10 +7,10 @@
     //When page loads, comment history is sent from the server to browser (new connection)
     socket.on('comment-history', function(comments){
         //Clear all comment sections
-        var allCommentSections = document.querySelectorAll('.comments ul');
-        allCommentSections.forEach(function(section){
-            section.innerHTML='';
-        });
+        for(var i=0; i < comments.length; i++){
+            var commentSection = document.querySelector('.comments #' + comments[i].commentTweetId);
+            commentSection.innerHTML='';
+        }
 
         //Add the comments to the HTML
         for(var i=0; i < comments.length; i++){
@@ -48,9 +48,10 @@
     var comment = {
         //Get the input of the user and send it to the server
         emits: function(myComment){
-            var textArea = comment.parentNode.querySelector('.comment-area');
-            var textAreaValue = comment.parentNode.querySelector('.comment-area').value;
-            var commentTweetID = comment.parentNode.parentNode.querySelector('ul').getAttribute('id');
+            var textArea = myComment.parentNode.querySelector('.comment-area');
+            var textAreaValue = myComment.parentNode.querySelector('.comment-area').value;
+            var commentTweetID = myComment.parentNode.parentNode.querySelector('ul').getAttribute('id');
+            var commentList = myComment.parentNode.parentNode.querySelector('ul');
 
             //Send the comment with the tweetID to the server
             socket.emit('comment', {
@@ -124,6 +125,10 @@
 
     //When the server sends a comment, execute renderComments
     socket.on('comment', function(comm){
+        var commentList = document.querySelector('#' + comm.commentTweetId);
+        if(commentList.contains(document.querySelector('#' + comm.commentTweetId + ' .nocomment')) == true){
+            commentList.removeChild(document.querySelector('#' + comm.commentTweetId + ' .nocomment'));
+        }
         comment.render(comm);
     });
 

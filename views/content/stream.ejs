@@ -1,45 +1,51 @@
 <%- include('../partials/header.ejs') %>
-<h2>Welcome <%= username || 'user' %></h2>
-<!--<form class="search-stream-form" method="post">
-    <label for="stream-input">Search twitter stream</label>
-    <input type="text" name="stream-input" id="stream-input" />
-    <input type="submit" />
-</form>-->
-<section id="tweets">
-    <h3>Stupid tweets Trump tweeted</h3>
-    <ul>
-        <% tweets.forEach(function(tweet){ %>
-            <li>
-                <blockquote>
-                    <time>
-                        <%= tweet.created_at %>
-                    </time>
-                    <%= tweet.text %>
-                    <footer>
-                        -<%= tweet.user.name %>
-                    </footer>
-                </blockquote>
-                <section>
-                    <h4>Hate on it</h4>
-                    <div class="dislike">
-                        <span class="dislike-counter" id="dislike--tweetid-<%=tweet.id%>">0</span>
-                        <button class="dislike-button">👎</button>
-                    </div>
-                    <div class="comments">
-                        <h5>Comment</h5>
-                        <ul id="comment-tweetid-<%=tweet.id%>">
-
-                        </ul>
-                        <form class="comment-form">
-                            <input type="textarea" placeholder="Comment something negative" class="comment-area" />
-                            <input type="submit" value="Spread hate" />
-                        </form>
-                    </div>
-                </section>
-            </li>
-        <% }) %>
-    </ul>
-</section>
+<div class="main">
+    <h2>Welcome <%= username || 'user' %></h2>
+    <!--<form class="search-stream-form" method="post">
+        <label for="stream-input">Search twitter stream</label>
+        <input type="text" name="stream-input" id="stream-input" />
+        <input type="submit" />
+    </form>-->
+    <section id="tweets">
+        <h3>Stupid tweets Trump tweeted</h3>
+        <ul class="tweets-list">
+            <% tweets.forEach(function(tweet){ %>
+                <li>
+                    <blockquote>
+                        <p>
+                            <%= tweet.text %>
+                        </p>
+                        <footer>
+                            -<%= tweet.user.name %>
+                        </footer>
+                        <time>
+                            <%= tweet.created_at.substring(0, 16)+tweet.created_at.substring(25, 30) %>
+                        </time>
+                    </blockquote>
+                    <section>
+                        <h4>Hate on it</h4>
+                        <div class="dislike">
+                            <span class="dislike-counter" id="dislike--tweetid-<%=tweet.id%>">0</span>
+                            <button class="dislike-button">👎</button>
+                        </div>
+                        <div class="comments">
+                            <h5>Comments</h5>
+                            <ul id="comment-tweetid-<%=tweet.id%>">
+                                <p class="nocomment">
+                                    No comments yet. Be the first!
+                                </p>
+                            </ul>
+                            <form class="comment-form">
+                                <input type="textarea" placeholder="Comment something negative" class="comment-area" />
+                                <input type="submit" value="Spread hate" />
+                            </form>
+                        </div>
+                    </section>
+                </li>
+            <% }) %>
+        </ul>
+    </section>
+</div>
 <%- include('../partials/footer.ejs') %>
 <script>
     var commentUsername = "<%= username || 'user' %>";

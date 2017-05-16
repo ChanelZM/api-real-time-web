@@ -50,7 +50,7 @@ I've divided what I need to do into two sections: 'To Do' will cover the must ha
 - [x] Attach username to comment.
 - [ ] Create style.css.
 - [x] Write a good read me.
-- [ ] Refactor code.
+- [x] Refactor code.
 
 ## 4 Features
 - Comment hateful things on Donald Trumps tweets with own username. :speech_balloon:
@@ -297,7 +297,7 @@ $ npm start
 ## 8 Bugs that need fixing
 - [x] #1 When user 1 adds multiple comments user 2 sees the comment twice/three times and even more.
 - [x] #2 When a user wants to comment on another tweet the same comment will be added to the previous tweet.
-- [ ] #3 Likes don't work with three users.
+- [x] #3 Likes don't work with three users.
 
 ## 9 References
 Special thanks to:

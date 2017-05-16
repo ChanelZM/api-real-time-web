@@ -1,51 +1,289 @@
+/* GLOBAL */
 body {
-    background-color: #20000D;
+    background-color: black;
     color: white;
-    font-family: 'Open Sans', sans-serif;
-    margin: auto;
+    font-family: 'Merriweather', sans-serif;
+    margin: 0;
     padding: 0;
-    max-width: 60rem;
 }
 
+body::after {
+    content: '';
+    opacity: 0.4;
+    background-image: url('../img/spacepattern.jpg');
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    z-index: -1;
+}
 h1 {
-    color: transparent;
+    float: left;
+    margin: 0;
+    padding: 0.5rem;
+    text-transform: uppercase;
+    font-family: 'Francois One', sans-serif;
+    font-size: 1.4em;
 }
 
 h2 {
-    font-family: 'Brush Script MT', cursive;
+    margin: 0;
+    padding: 0.5rem;
+    font-family: 'Francois One', sans-serif;
+    text-transform: uppercase;
+    color: rgb(165, 217, 243);
+    font-size: 3em;
+    padding: 0.5rem;
+}
+
+h3 {
+    font-family: 'Francois One', sans-serif;
+    text-transform: uppercase;
+    border-bottom: 3px solid rgb(19,105,156);
+    display: inline-block;
+    padding-bottom: 0.5em;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    font-size: 2em;
+}
+
+h5 {
+    border-bottom: 3px solid black;
+    font-family: 'Francois One', sans-serif;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0.5rem;
+}
+
+h6 {
+    display: inline-block;
+    color: rgb(165, 217, 243);
+    font-family: 'Francois One', sans-serif;
+    font-size: 1em;
+    margin: 0;
+    text-transform: uppercase;
+    width: 15%;
 }
 
 header {
-    text-align: center;
+    background-color: black;
+    position: fixed;
+    width: 100vw;
+}
+
+main {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+input[type="text"]{
+    text-transform: uppercase;
+    font-family: 'Francois One', sans-serif;
+    color: rgb(19,105,156);
+}
+
+input[type="submit"]{
+    background-color: rgb(19,105,156);
+    border: none;
+    color: white;
+    font-family: 'Francois One', sans-serif;
+    font-size: 1em;
+    padding: 0.7em;
+    text-transform: uppercase;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+header + .main {
+    padding-top: 4rem;
 }
 
 header img {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 30rem;
+    float: left;
+    padding: 0.5rem;
+    width: 2rem;
 }
 
-header h2 {
-    margin-top: 0;
-}
-
-footer {
+body > footer {
+    background-color: black;
     bottom: 1rem;
-    color: #ffe6f0;
+    color: rgb(165, 217, 243);
     font-size: 0.8em;
-    font-style: italic;
+    position: fixed;
+    font-family: 'Francois One', sans-serif;
+    text-transform: uppercase;
+}
+
+/* LOGIN */
+main h2 {
+    float: right;
+    position: absolute;
+    top: 14rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+input[name="username"]{
+    border: none;
+    font-size: 1.2em;
+    width: 17rem;
+}
+
+.tweets-list h4 {
+    clip: rect(0, 0, 0, 0);
     position: absolute;
 }
 
 .username-form {
-    background-color: #563D3D;
-    margin-left: auto;
-    margin-right: auto;
+    background-image: url('../img/moon.png');
+    background-size: 100%;
+    margin: auto;
     padding: 1em;
-    width: 20rem;
+    text-align: center;
+    width: 25rem;
+    height: 25rem;
+    border-radius: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.username-form h3 {
-    margin-top: 0;
+.username-form label {
+    display: none !important;
+}
+
+.username-form > div > *:not(h3) {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.5rem;
+}
+
+/* STREAM */
+.main {
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#tweets h3 {
+    border: none;
+}
+
+#tweets ul {
+    list-style: none;
+}
+
+#tweets > ul {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding-left: 0;
+}
+
+#tweets .tweets-list > li {
+    border-top: 3px solid rgb(19,105,156);
+    box-sizing: border-box;
+    float: left;
+    width: calc(50% - 0.5rem);
+    margin-bottom: 1rem;
+}
+
+#tweets .tweets-list > li:nth-child(2n){
+    margin-left: 0.5rem;
+}
+#tweets .tweets-list > li:nth-child(2n+1){
+    margin-right: 0.5rem;
+}
+
+#tweets blockquote {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+#tweets blockquote p {
+    font-size: 1.6em;
+}
+
+#tweets blockquote footer {
+    display: inline-block;
+    font-size: 0.8em;
+    font-style: italic;
+}
+
+#tweets blockquote time {
+    color: rgb(165, 217, 243);
+    display: inline-block;
+    font-size: 0.8em;
+    font-style: italic;
+}
+
+.comment-form {
+    display: flex;
+    margin-top: 0.5rem;
+}
+
+.comment-form input[type="textarea"] {
+    border: none;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: inherit;
+    margin: 0;
+    padding: 0.6rem;
+    width: 80%;
+}
+
+.comment-form input[type="submit"] {
+    box-sizing: border-box;
+    width: 20%;
+    margin: 0;
+}
+
+.comments {
+    background-color: rgb(6, 33, 45);
+}
+
+.comments ul {
+    padding: 0 0.5rem;
+}
+
+.comments ul li {
+    display: flex;
+    flex-wrap: nowrap;
+    padding-top: 0.5rem;
+}
+
+.comments ul li p {
+    margin: 0;
+    padding-left: 1rem;
+}
+
+.nocomment {
+    color: rgb(28, 150, 202);
+    font-style: italic;
+    font-size: 0.8em;
+}
+
+.dislike {
+    border-radius: 3px;3
+    background-color: rgb(28, 150, 202);
+    display: inline-block;
+    margin: 0.5rem 0;
+    padding: 0.2rem;
+}
+
+.dislike button {
+    background-color: rgb(28, 150, 202);
+    border: none;
+    margin: 0;
 }
