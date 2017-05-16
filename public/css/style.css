@@ -275,7 +275,7 @@ input[name="username"]{
 }
 
 .dislike {
-    border-radius: 3px;3
+    border-radius: 3px;
     background-color: rgb(28, 150, 202);
     display: inline-block;
     margin: 0.5rem 0;
