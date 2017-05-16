@@ -30,7 +30,7 @@ var commentsSchema = mongoose.Schema({
 var dislikeSchema = mongoose.Schema({
     dislikeTweetId: String,
     dislikes: Number
-})
+});
 
 var Post = mongoose.model('Comment', commentsSchema);
 var Dislike = mongoose.model('Dislike', dislikeSchema);

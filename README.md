@@ -210,9 +210,40 @@ socket.on('comment', function(comm){
 ```
 
 ##### 6.2.4.2 dislikes
-~
+- To add dislikes we create a function **on the client-side**. Inside the function create variables for the button, id of the tweet and one to change the input from string to a number:
 
-Congrats! All users connected can now real time view the comments that are added.
+```javascript
+var dislikeButton = el.parentNode.querySelector('.dislike-button'),
+    dislikeCounter = el.parentNode.querySelector('.dislike-counter'),
+    dislikeTweetID = dislikeCounter.getAttribute('id'),
+    numberCounter = Number(dislikeCounter.innerHTML);
+```
+- We need to make an if statement so that the user can only dislike once. When the user dislikes the post, the button gets a class 'liked'. When the user clicks again, the class will be removed:
+
+```javascript
+if(dislikeButton.getAttribute('class') == 'dislike-button'){
+    dislikeButton.classList.add('liked');
+    numberCounter++;
+    dislike.emits(dislikeTweetID, numberCounter);
+} else {
+    dislikeButton.classList.remove('liked');
+    numberCounter--;
+    dislike.emits(dislikeTweetID, numberCounter);
+}
+```
+
+- Now we emit the dislike to the server:
+
+```javascript
+emits: function(tweetId, dislikes){
+    socket.emit('dislike', {
+        dislikeTweetId: tweetId,
+        dislikes: dislikes
+    });
+```
+- You can now repeat the steps we used with emitting the comments except we use 'dislike'.
+
+Congrats! All users connected can now real time view the comments and dislikes that are added.
 
 #### 6.2.5 Mongoose
 Just like Facebook, we don't want to loose our comments after refreshing or server reset. In order to do that we are going to use a database.
@@ -266,10 +297,10 @@ Post.find({}, function(err, docs){
 - On the client-side these comments need to be added to the html. To prevent that on a new connection the comments get added a second time (or even a third time), we clear the html tag before adding the comment-history:
 ```javascript
 socket.on('comment-history', function(comments){
-    var allCommentSections = document.querySelectorAll('.comments ul');
-    allCommentSections.forEach(function(section){
-        section.innerHTML='';
-    });
+    for(var i=0; i < comments.length; i++){
+        var commentSection = document.querySelector('.comments #' + comments[i].commentTweetId);
+        commentSection.innerHTML='';
+    }
 
     //Loops through every comment and executes addComments for every comment.
     for(var i=0; i < comments.length; i++){
@@ -277,6 +308,16 @@ socket.on('comment-history', function(comments){
     }
 });
 ```
+- You can repeat the steps above for the dislikes, just rename the Schema and the model:
+
+ ```javascript
+ var dislikeSchema = mongoose.Schema({
+     dislikeTweetId: String,
+     dislikes: Number
+ });
+ var Dislike = mongoose.model('Dislike', dislikeSchema);
+ ```
+  - Also create a dislike history for new connections.
 
 #### 6.2.6 Run application
 - Run application by typing this in your terminal:
