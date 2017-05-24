@@ -21,7 +21,8 @@
     //When page loads, dislike histoy is sent from the server to browser (new connection)
     socket.on('dislike-history', function(dislikes){
         for(var i=0; i < dislikes.length; i++){
-            dislike.render(dislikes[i]);
+            dislike.renders(dislikes[i]);
+            console.log(dislikes[i]);
         }
     })
 
@@ -112,15 +113,16 @@
             });
         },
         //Add the amount of dislikes to the page
-        render: function(dis){
-            var targetTweet = document.getElementById(dis.dislikeTweetId);
-            targetTweet.innerHTML = dis.dislikes;
+        renders: function(disl){
+            if(document.getElementById(disl.dislikeTweetId) != undefined){
+                document.getElementById(disl.dislikeTweetId).innerHTML = disl.dislikes;
+            }
         }
     }
 
     //When the server sends a dislike, increment the number of likes
     socket.on('dislike', function(dis){
-        dislike.render(dis);
+        dislike.renders(dis);
     });
 
     //When the server sends a comment, execute renderComments
