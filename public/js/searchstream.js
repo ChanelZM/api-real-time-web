@@ -22,7 +22,6 @@
     socket.on('dislike-history', function(dislikes){
         for(var i=0; i < dislikes.length; i++){
             dislike.renders(dislikes[i]);
-            console.log(dislikes[i]);
         }
     })
 
