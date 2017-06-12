@@ -9,7 +9,9 @@
         //Clear all comment sections
         for(var i=0; i < comments.length; i++){
             var commentSection = document.querySelector('.comments #' + comments[i].commentTweetId);
-            commentSection.innerHTML='';
+            if(commentSection != undefined){
+                commentSection.innerHTML='';
+            }
         }
 
         //Add the comments to the HTML
@@ -80,7 +82,9 @@
             newLi.appendChild(newPar);
 
             //Append element to parent
-            targetTweet.appendChild(newLi);
+            if(targetTweet != undefined){
+                targetTweet.appendChild(newLi);
+            }
         }
     };
 
